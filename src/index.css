@@ -1,13 +1,47 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+  :root {
+    /* Core palette */
+    --border: 220 14% 96%;
+    --input: 220 14% 96%;
+    --ring: 220 14% 96%;
+    --background: 0 0% 100%;
+    --foreground: 220 10% 10%;
+
+    /* Primary theme */
+    --primary: 222 47% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 222 47% 60%;
+
+    /* Admin sidebar theme */
+    --admin-sidebar: 222 47% 8%;
+    --admin-sidebar-foreground: 220 14% 70%;
+    --admin-sidebar-active: 222 47% 16%;
+    --admin-sidebar-hover: 222 47% 12%;
+
+    /* Optional extras */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+    --radius: 0.5rem;
+    --transition-smooth: all 200ms ease-in-out;
+
+     --border: 220 14% 90%;
+  --background: 0 0% 100%;
+  --primary: 240 100% 60%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 220 14% 95%;
+  --accent-foreground: 220 14% 30%;
+
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 240 5.9% 90%;
+  --accent-foreground: 240 5.9% 10%;
+  --border: 240 5.9% 90%;
+  --primary: 36 100% 50%;
+  }
 }

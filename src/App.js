@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AdminLayout } from "./Components/AdminLayout";
+import Dashboard from "./Pages/Dashboard";
+import Products from "./Pages/Products";
+import Orders from "./Pages/Orders";
+import Customers from "./Pages/Customers";
+import Analytics from "./Pages/Analytics";
+import Login from "./Pages/Login";
+import "./index.css";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useAdminContext, AdminProvider } from "./Context/Context";
 
-function App() {
+const queryClient = new QueryClient();
+
+const AppContent = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AdminLayout>
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/customers" element={<Customers />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/" element={<Login />} />
+          </Routes>
+        </AdminLayout>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
-}
+};
+
+const App = () => (
+  <AdminProvider>
+    <AppContent />
+  </AdminProvider>
+);
 
 export default App;
