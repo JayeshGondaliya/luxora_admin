@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
     Home,
@@ -14,13 +14,11 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useAdminContext } from "../Context/Context";
-
 const AdminSidebar = () => {
-    const { adminId } = useAdminContext();
+    const { adminId, loading } = useAdminContext();
     const navigate = useNavigate()
     const location = useLocation();
     const { open, toggle } = useContext(SidebarContext);
-
     const isActive = (url) => location.pathname === url;
 
     const URL = "http://localhost:8081"
@@ -29,7 +27,7 @@ const AdminSidebar = () => {
             const res = await axios.post(`${URL}/api/admin/adminLogout`, {}, { withCredentials: true })
             if (res.data.success) {
                 toast.success("logout successfull")
-                adminId(false)
+                adminId(null)
                 navigate("/")
 
             }
@@ -39,6 +37,11 @@ const AdminSidebar = () => {
 
         }
     }
+    useEffect(() => {
+        if (!loading && !adminId) {
+            navigate("/")
+        }
+    }, [loading, adminId, navigate])
     return (
         <>
             {/* Overlay for mobile when sidebar is open */}

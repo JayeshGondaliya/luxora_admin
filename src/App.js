@@ -8,9 +8,7 @@ import Customers from "./Pages/Customers";
 import Analytics from "./Pages/Analytics";
 import Login from "./Pages/Login";
 import "./index.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useAdminContext, AdminProvider } from "./Context/Context";
+import {  AdminProvider } from "./Context/Context";
 
 const queryClient = new QueryClient();
 

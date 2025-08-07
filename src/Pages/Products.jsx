@@ -79,13 +79,15 @@ export default function Products() {
     const URL = "http://localhost:8081";
     const [showProductModal, setShowProductModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
-    const { adminId } = useAdminContext();
+    const { adminId, loading } = useAdminContext();
     const navigate = useNavigate()
     useEffect(() => {
-        if (adminId === false) {
-            navigate("/"); // redirect to login
+        if (!loading && !adminId) {
+            navigate("/");
         }
-    }, [adminId, navigate]);
+    }, [adminId, loading, navigate]);
+
+
     const getAllProducts = async () => {
         try {
             const res = await axios.get(`${URL}/api/product/getProductAll`, { withCredentials: true });
@@ -121,9 +123,14 @@ export default function Products() {
 
     const handleAddProduct = async () => {
         const data = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value);
-        });
+        data.append('name', formData.name);
+        data.append('description', formData.description);
+        data.append('price', formData.price);
+        data.append('quantity', formData.quantity);
+        data.append('category', formData.category);
+        data.append('discount', formData.discount);
+        data.append('ratings', formData.ratings);
+        data.append('image', formData.image); // ✅ Important: key must match upload.single('image')
 
         try {
             const res = await axios.post(`${URL}/api/product/addProduct`, data, {
@@ -135,52 +142,56 @@ export default function Products() {
                 toast.success("Product added successfully!");
                 setShowModal(false);
                 getAllProducts();
-                setErrorMsg(''); // clear previous errors
+                setErrorMsg('');
             } else {
-                // 🔴 Set the error message from backend
                 setErrorMsg(res.data.message || "Something went wrong.");
             }
         } catch (error) {
-            // 🔴 Show backend error message if available
-            if (error.response && error.response.data && error.response.data.message) {
-                setErrorMsg(error.response.data.message);
-            } else {
-                setErrorMsg("Add product failed. Please try again.");
-            }
+            setErrorMsg("Add product failed. Please try again.");
         }
     };
 
     const handelEditProduct = async (product) => {
         const data = new FormData();
-        Object.entries(formData).forEach(([key, value]) => {
-            data.append(key, value);
-        });
-        console.log("data", data);
+
+        data.append('name', formData.name);
+        data.append('description', formData.description);
+        data.append('price', formData.price);
+        data.append('quantity', formData.quantity);
+        data.append('category', formData.category);
+        data.append('discount', formData.discount);
+        data.append('ratings', formData.ratings);
+
+        // ✅ Append image ONLY if it's a new file (not a string/URL)
+        if (formData.image && formData.image instanceof File) {
+            data.append('image', formData.image); // Must match upload.single('image')
+        }
 
         try {
             const res = await axios.post(
                 `${URL}/api/product/editProduct/${product._id}`,
                 data,
                 {
-                    withCredentials: true,
                     headers: {
-                        "Content-Type": "multipart/form-data",
+                        'Content-Type': 'multipart/form-data',
                     },
+                    withCredentials: true,
                 }
             );
 
             if (res.data.success) {
-                toast.success("Product update successfully!");
+                toast.success("Product updated successfully!");
                 setShowEditModel(false);
                 getAllProducts();
-                setErrorMsg(''); // clear previous errors
+                setErrorMsg('');
             } else {
                 setErrorMsg(res.data.message || "Something went wrong.");
             }
         } catch (error) {
-            setErrorMsg("update product failed. Please try again.");
+            setErrorMsg("Update product failed. Please try again.");
         }
-    }
+    };
+
     const handelDelete = async (product) => {
         try {
             const res = await axios.delete(`${URL}/api/product/deleteProduct/${product._id}`, { withCredentials: true })
@@ -208,7 +219,9 @@ export default function Products() {
             console.error("Error fetching product:", error);
         }
     };
-
+    if (loading) {
+        return <div>Loading...</div>; // or use a <Spinner /> component
+    }
     return (
         <div className="space-y-6 p-6">
             <div className="flex items-center justify-between">

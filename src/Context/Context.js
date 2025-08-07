@@ -5,15 +5,15 @@ const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
   const [adminId, setAdminId] = useState(null);
-
+const [loading,setLoading]=useState(true)
   const checkAdmin = async () => {
     try {
       const res = await axios.get("http://localhost:8081/api/admin/get-admin", {
         withCredentials: true,
       });
 
-      if (res.data.success &&res.data.isAdmin) {
-      setAdminId(res.data.data.data._id); // safer if consistent
+      if (res.data.success ) {
+      setAdminId(res.data.adminId); 
 
 
       } else {
@@ -22,6 +22,8 @@ export const AdminProvider = ({ children }) => {
     } catch (error) {
       console.log("Error checking admin:", error);
       setAdminId(null);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -30,7 +32,7 @@ export const AdminProvider = ({ children }) => {
   }, []);
 
   return (
-    <AdminContext.Provider value={{ adminId ,setAdminId}}>
+    <AdminContext.Provider value={{ adminId ,setAdminId,loading,setLoading}}>
       {children}
     </AdminContext.Provider>
   );

@@ -11,12 +11,14 @@ export default function Orders() {
     const navigate = useNavigate()
     const [searchTerm, setSearchTerm] = useState("");
     const [orders, setOrders] = useState([]);
-    const { adminId } = useAdminContext();
+    const { adminId, loading } = useAdminContext();
     useEffect(() => {
-        if (adminId === false) {
-            navigate("/"); // redirect to login
+        if (!loading && !adminId) {
+            navigate("/");
         }
-    }, [adminId, navigate]);
+    }, [adminId, loading, navigate]);
+
+
     useEffect(() => {
         axios.get("http://localhost:8081/api/order/recentOrder", { withCredentials: true })
             .then((res) => {
@@ -35,6 +37,9 @@ export default function Orders() {
             order.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    if (loading) {
+        return <div>Loading...</div>; // or use a <Spinner /> component
+    }
     return (
         <div className="p-6 space-y-6">
             <div>
