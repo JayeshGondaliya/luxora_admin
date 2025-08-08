@@ -15,7 +15,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const { adminId, loading } = useAdminContext();
     const [recentOrders, setRecentOrders] = useState([]);
-    const URL = "http://localhost:8081";
+    const URL = "http://localhost:8081"
 
 
 

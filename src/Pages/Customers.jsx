@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+
 import {
     Search,
     Filter,
@@ -11,7 +12,9 @@ import {
     Phone,
     MapPin,
 } from "lucide-react";
-
+import axios from "axios";
+import { useAdminContext } from '../Context/Context';
+import { useNavigate } from "react-router-dom";
 // ✅ Inline UI Components
 
 const Button = ({ children, className = "", variant = "", ...props }) => {
@@ -172,6 +175,10 @@ const customers = [
 // ✅ Main Component
 export default function Customers() {
     const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
+    const { adminId, loading } = useAdminContext();
+    const [recentOrders, setRecentOrders] = useState([]);
+    const URL = "https://luxora-backend-guh1.onrender.com";
 
     const getStatusBadge = (status) => {
         const variants = {
@@ -206,7 +213,14 @@ export default function Customers() {
             sum + parseFloat(c.totalSpent.replace("$", "").replace(",", "")),
         0
     );
-
+    useEffect(() => {
+        if (!loading && !adminId) {
+            navigate("/");
+        }
+    }, [adminId, loading, navigate]);
+    if (loading) {
+        return <div>Loading...</div>; // or use a <Spinner /> component
+    }
     return (
         <div className="space-y-6 p-6">
             {/* Header */}

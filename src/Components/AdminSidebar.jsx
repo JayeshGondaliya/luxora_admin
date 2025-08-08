@@ -15,19 +15,23 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useAdminContext } from "../Context/Context";
 const AdminSidebar = () => {
-    const { adminId, loading } = useAdminContext();
+    const { adminId, setAdminId, loading } = useAdminContext();
     const navigate = useNavigate()
     const location = useLocation();
     const { open, toggle } = useContext(SidebarContext);
     const isActive = (url) => location.pathname === url;
 
     const URL = "http://localhost:8081"
-    const logout = async () => {
+    const logout = async (e) => {
+        e.preventDefault()
         try {
+
             const res = await axios.post(`${URL}/api/admin/adminLogout`, {}, { withCredentials: true })
             if (res.data.success) {
                 toast.success("logout successfull")
-                adminId(null)
+                setAdminId(null)
+                console.log("okokokokokokokok");
+
                 navigate("/")
 
             }
@@ -107,6 +111,16 @@ const AdminSidebar = () => {
                         <ShoppingCart className="w-5 h-5" />
                         <span className="ml-3 text-sm">Products</span>
                     </NavLink>
+                    {/* <NavLink
+                        to="/customer"
+                        className={`flex items-center px-3 py-2 rounded-lg transition-all ${isActive("/customer")
+                            ? "bg-orange-500 text-white font-semibold"
+                            : "text-gray-600 hover:bg-gray-100 hover:text-black"
+                            }`}
+                    >
+                        <ShoppingCart className="w-5 h-5" />
+                        <span className="ml-3 text-sm">Customer</span>
+                    </NavLink> */}
 
                     {/* <NavLink
                         to="/settings"
@@ -122,21 +136,18 @@ const AdminSidebar = () => {
 
                 {/* Logout */}
                 <div className="mt-auto px-4 py-4 border-t">
-                    <NavLink
-                        onClick={() => {
-                            const confirmed = window.confirm("Are you sure you want to logout?");
-                            if (confirmed) {
-                                logout();
-                                adminId(null)
-                            }
+                    <button
+                        onClick={(e) => {
+                            logout(e);
+                            //adminId(null);
                         }}
-                        className="flex items-center gap-3 text-red-500 hover:text-red-600 transition"
+                        className="flex items-center gap-3 text-red-500 hover:text-red-600 transition font-medium"
                     >
                         <LogOut className="h-5 w-5" />
-                        <span className="font-medium">Logout</span>
-                    </NavLink>
-
+                        <span>Logout</span>
+                    </button>
                 </div>
+
             </aside>
         </>
     );
