@@ -8,7 +8,7 @@ export const AdminProvider = ({ children }) => {
 const [loading,setLoading]=useState(true)
   const checkAdmin = async () => {
     try {
-      const res = await axios.get("http://localhost:8081/api/admin/get-admin", {
+      const res = await axios.get("https://luxora-backend-guh1.onrender.com/api/admin/get-admin", {
         withCredentials: true,
       });
 
