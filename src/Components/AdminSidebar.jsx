@@ -21,7 +21,7 @@ const AdminSidebar = () => {
     const { open, toggle } = useContext(SidebarContext);
     const isActive = (url) => location.pathname === url;
 
-    const URL = "http://localhost:8081"
+    const URL = "https://luxora-backend-guh1.onrender.com"
     const logout = async (e) => {
         e.preventDefault()
         try {
