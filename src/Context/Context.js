@@ -31,11 +31,7 @@ const [loading,setLoading]=useState(true)
     checkAdmin(); 
   }, []);
   if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-xl text-gray-500">
-        Loading...
-      </div>
-    );
+    return <div className="h-screen flex items-center justify-center text-xl">Loading...</div>;
   }
 
   return (
