@@ -11,9 +11,13 @@ import "./index.css";
 import {  AdminProvider, useAdminContext } from "./Context/Context";
 
 const queryClient = new QueryClient();
-
 const AppContent = () => {
-  
+  const { loading } = useAdminContext();
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -33,16 +37,11 @@ const AppContent = () => {
 };
 
 const App = () => {
-  const { loading } = useAdminContext();
-
-  
-
   return (
     <AdminProvider>
       <AppContent />
     </AdminProvider>
   );
 };
-
 
 export default App;
