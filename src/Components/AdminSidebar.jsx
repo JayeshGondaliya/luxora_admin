@@ -135,6 +135,7 @@ const AdminSidebar = () => {
                 </nav>
 
                 {/* Logout */}
+                {/* logout */}
                 <div className="mt-auto px-4 py-4 border-t">
                     <button
                         onClick={(e) => {
