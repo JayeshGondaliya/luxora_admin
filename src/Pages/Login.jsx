@@ -162,8 +162,8 @@ const AdminLogin = () => {
         e.preventDefault();
         setIsLoading(true);
         const url = isLogin
-            ? "http://localhost:8081/api/admin/adminLogin"
-            : "http://localhost:8081/api/admin/register";
+            ? "https://luxora-backend-guh1.onrender.com/api/admin/adminLogin"
+            : "https://luxora-backend-guh1.onrender.com/api/admin/register";
 
         try {
             const res = await axios.post(url, formData, {
