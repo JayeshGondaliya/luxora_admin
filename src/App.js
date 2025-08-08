@@ -8,11 +8,17 @@ import Customers from "./Pages/Customers";
 import Analytics from "./Pages/Analytics";
 import Login from "./Pages/Login";
 import "./index.css";
-import {  AdminProvider } from "./Context/Context";
+import { AdminProvider, useAdminContext } from "./Context/Context";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
+  const { loading } = useAdminContext();
+
+  if (loading) {
+    return <div className="h-screen flex items-center justify-center text-xl">Loading...</div>;
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -31,11 +37,7 @@ const AppContent = () => {
   );
 };
 
-
 const App = () => {
-
-
-
   return (
     <AdminProvider>
       <AppContent />
