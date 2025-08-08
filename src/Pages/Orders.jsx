@@ -20,7 +20,7 @@ export default function Orders() {
 
 
     useEffect(() => {
-        axios.get("http://localhost:8081/api/order/recentOrder", { withCredentials: true })
+        axios.get("https://luxora-backend-guh1.onrender.com/api/order/recentOrder", { withCredentials: true })
             .then((res) => {
                 if (res.data.success) {
                     const sorted = [...res.data.data].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
