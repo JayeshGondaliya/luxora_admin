@@ -76,7 +76,7 @@ export default function Products() {
     // const { name, description, price, quantity, category, discount, ratings } = req.body;
     const [errorMsg, setErrorMsg] = useState('');
     const [product, setProduct] = useState([])
-    const URL = "http://localhost:8081";
+    const URL = "https://luxora-backend-guh1.onrender.com";
     const [showProductModal, setShowProductModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const { adminId, loading } = useAdminContext();
