@@ -33,11 +33,8 @@ const AppContent = () => {
 
 
 const App = () => {
-  const { loading } = useAdminContext();
 
-  if (loading) {
-    return <div>Loading...</div>; 
-  }
+
 
   return (
     <AdminProvider>
