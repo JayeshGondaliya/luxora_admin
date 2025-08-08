@@ -8,24 +8,12 @@ import Customers from "./Pages/Customers";
 import Analytics from "./Pages/Analytics";
 import Login from "./Pages/Login";
 import "./index.css";
-import { AdminProvider, useAdminContext } from "./Context/Context";
-
-// Spinner JSX (You can replace this with your custom spinner)
-const Spinner = () => (
-  <div className="flex justify-center items-center h-screen">
-    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-  </div>
-);
+import {  AdminProvider, useAdminContext } from "./Context/Context";
 
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  const { loading } = useAdminContext();
-
-  if (loading) {
-    return <Spinner />;
-  }
-
+  
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -45,11 +33,16 @@ const AppContent = () => {
 };
 
 const App = () => {
+  const { loading } = useAdminContext();
+
+  
+
   return (
     <AdminProvider>
       <AppContent />
     </AdminProvider>
   );
 };
+
 
 export default App;
