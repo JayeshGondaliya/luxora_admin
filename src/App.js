@@ -31,10 +31,19 @@ const AppContent = () => {
   );
 };
 
-const App = () => (
-  <AdminProvider>
-    <AppContent />
-  </AdminProvider>
-);
+
+const App = () => {
+  const { loading } = useAdminContext();
+
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+
+  return (
+    <AdminProvider>
+      <AppContent />
+    </AdminProvider>
+  );
+};
 
 export default App;
